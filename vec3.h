@@ -1,8 +1,8 @@
-#include <ostream>
-#include <cmath>
-
 #ifndef VEC3_DEFINED_
 #define VEC3_DEFINED_
+
+#include <ostream>
+#include <cmath>
 
 template <typename T = double>
 struct Vec3 {
@@ -32,7 +32,8 @@ struct Vec3 {
   Vec3 operator*(T) const;
   Vec3 operator/(T) const;
 
-  friend std::ostream& operator<<(std::ostream&, const Vec3);
+  template <typename U>
+  friend std::ostream& operator<<(std::ostream&, const Vec3<U>&);
   std::string toString() const;
 
   void operator+=(const Vec3&);
