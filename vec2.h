@@ -166,4 +166,8 @@ std::ostream& operator<<(std::ostream& os, const Vec2<T>& v) {
   return os;
 }
 
+typedef Vec2<double> Vec2f;
+
+const Vec2f ErrorVector(std::numeric_limits<double>::min(), std::numeric_limits<double>::min());
+
 #endif

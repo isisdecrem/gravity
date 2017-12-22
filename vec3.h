@@ -27,10 +27,10 @@ struct Vec3 {
   T distance(const Vec3&) const;
 
   bool operator==(const Vec3&) const;
-  Vec3 operator+(const Vec3&) const;
-  Vec3 operator-(const Vec3&) const;
-  Vec3 operator*(T) const;
-  Vec3 operator/(T) const;
+  Vec3<T> operator+(const Vec3&) const;
+  Vec3<T> operator-(const Vec3&) const;
+  Vec3<T> operator*(T) const;
+  Vec3<T> operator/(T) const;
 
   template <typename U>
   friend std::ostream& operator<<(std::ostream&, const Vec3<U>&);
@@ -181,6 +181,8 @@ std::ostream& operator<<(std::ostream& os, const Vec3<T>& v) {
   os << v.x << ", " << v.y << ", " << v.z;
   return os;
 }
+
+typedef Vec3<double> Vec3f;
 
 
 #endif

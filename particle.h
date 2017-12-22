@@ -79,7 +79,9 @@ Particle<P, M>::Particle(Vec3<P> pos, Vec3<P> vel, M mass) {
 template <typename P, typename M> void Particle<P, M>::step() { pos += vel; }
 
 template <typename P, typename M> void Particle<P, M>::step(double factor) {
-  pos += factor * vel;
+  Vec3<P> velc{vel};
+  velc *= factor;
+  pos += velc;
 }
 
 template <typename P, typename M> Vec3<P> &Particle<P, M>::getPos() const {

@@ -3,17 +3,15 @@
 
 #include "vec2.h"
 #include "vec3.h"
-
-typedef Vec2<double> Vec2f;
-typedef Vec3<double> Vec3f;
-
-const Vec2f ErrorVector(std::numeric_limits<double>::min(), std::numeric_limits<double>::min());
+#include "frame.h"
 
 class Camera {
 private:
   Vec3f target;
   Vec3f position;
   double z;
+
+  Frame frame;
 public:
   Camera();
   Camera(const Vec3f&, const Vec3f&, int z);
@@ -21,15 +19,26 @@ public:
   Vec3f getTarget() const;
   Vec3f getPosition() const;
   double getZ() const;
+  Frame& getFrame();
 
   void setTarget(const Vec3f&);
   void setPosition(const Vec3f&);
   void setTarget(double, double, double);
   void setPosition(double, double, double);
   void setZ(double);
+  void setFrame(Frame);
 
-  Vec2f project(const Vec3f&) const;
-  Vec2f project(double xk, double yk, double zk) const;
+  void setFrame(double, double, double, double, double, double);
+  void setFrame(const Vec2f&, const Vec2f&, const Vec2f&);
+
+  bool _inFrame(const Vec2f& a) const;
+  bool _inFrame(double x, double y) const;
+
+  Vec2f _projectNoConvert(const Vec3f&) const;
+  Vec2f _projectNoConvert(double xk, double yk, double zk) const;
+
+  Vec2f project(const Vec3f&);
+  Vec2f project(double xk, double yk, double zk);
 };
 
 #endif
