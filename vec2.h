@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <cmath>
+#include <limits>
 
 template <typename T = double>
 struct Vec2 {

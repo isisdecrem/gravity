@@ -11,7 +11,7 @@ typedef Particle<double, int> Star;
 class Universe {
 public:
   std::vector<Star> particles;
-  static constexpr double G = 0.01;
+  static constexpr double G = 0.0000001560698;
 
   Universe();
 
@@ -24,7 +24,7 @@ public:
 
   void gravitate(int, int, double);
   void step();
-  void step(double);
+  void step(double, int);
   void project(Camera&, Pixmap&);
 };
 

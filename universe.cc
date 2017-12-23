@@ -28,46 +28,38 @@ void Universe::mergeParticles(int index1, int index2) {
 }
 
 void Universe::step() {
-  step(1);
+  step(1, 1);
 }
 
 inline double sq(double s) {
   return s * s;
 }
 
+double tempForce;
+Vec3f tempDeltac = Vec3f();
+Vec3f tempDelta = Vec3f();
+
 void Universe::gravitate(int i1, int i2, double factor) {
   if (i1 == i2) return;
   Star& p1 = particles[i1];
   Star& p2 = particles[i2];
 
-  auto delta = p2.pos - p1.pos;
-  double force = factor * G / (sq(p2.pos.x - p1.pos.x) + sq(p2.pos.y - p1.pos.y) + sq(p2.pos.z - p1.pos.z));
+  tempDelta = p2.pos - p1.pos;
+  tempForce = factor * G / (sq(p2.pos.x - p1.pos.x) + sq(p2.pos.y - p1.pos.y) + sq(p2.pos.z - p1.pos.z));
 
-  Vec3f deltac{delta};
-  deltac *= -force * p2.mass;
+  tempDeltac = tempDelta;
+  tempDeltac *= -tempForce * p2.mass;
 
-  p1.vel += deltac;
-  deltac = delta;
+  p1.vel += tempDeltac;
 
-  deltac *= force * p1.mass;
-  p2.vel += deltac;
+  tempDelta *= tempForce * p1.mass;
+  p2.vel += tempDelta;
 }
 
-void Universe::step(double factor) {
+void Universe::step(double factor, int coarseness) {
   for (int i = 0; i < count(); i++) {
-    for (int j = i + 1; j < count(); j++) {
-      gravitate(i, j, factor);
-    }
-  }
-
-  int correctCount = count();
-
-  for (int i = 0; i < correctCount; i++) {
-    for (int j = i + 1; j < correctCount; j++) {
-      if (particles[i].pos.distance(particles[j].pos) < particles[i].radius + particles[j].radius) {
-        mergeParticles(i, j);
-        correctCount--;
-      }
+    for (int j = i + 1; j < count(); j += coarseness) {
+      gravitate(i, j, factor * coarseness);
     }
   }
 

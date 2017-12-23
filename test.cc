@@ -23,27 +23,31 @@ int main() {
   Camera c = Camera();
 
   c.setFrame(f);
-  c.setPosition(100, 100, 100);
+  c.setPosition(3e7, 1.5e7, 2.5e7);
   c.setTarget(0, 0, 0);
 
   Universe u = Universe();
 
   std::mt19937 rng;
   rng.seed(std::random_device()());
-  std::uniform_real_distribution<> dist(-100, 100);
-  std::uniform_real_distribution<> veldist(-2, 2);
+  std::uniform_real_distribution<> dist(-300000, 300000);
+  std::uniform_real_distribution<> veldist(-0.01, 0.01);
 
-  for (int i = 0; i < 10000; i++) {
-    u.addParticle(Star(Vec3f(dist(rng), dist(rng), dist(rng)), Vec3f(veldist(rng), veldist(rng), veldist(rng)), 2));
+  for (int i = 0; i < 1000000; i++) {
+    double x = dist(rng);
+    double y = -dist(rng);
+    double z = dist(rng);
+
+    u.addParticle(Star(Vec3f(x, y, z), Vec3f(x / 300000, y / 300000, z / 300000), 2));
   }
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 20000; i++) {
     std::cout << "Step: " << i << std::endl;
-    u.step(0.1);
+    u.step(1e5, 10000);
 
     k.clear();
     u.project(c, k);
 
-    k.exportToFile("/Users/timoothy/Desktop/particles/test" + std::to_string(i) + ".pgm");
+    k.exportToFile("/Users/timoothy/Desktop/particles/f" + std::to_string(i) + ".pgm");
   }
 }

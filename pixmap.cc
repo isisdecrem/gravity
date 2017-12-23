@@ -3,7 +3,6 @@
 
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 
 Pixmap::Pixmap(int width, int height) {
   pixels = new unsigned char[width * height];
@@ -60,7 +59,6 @@ void Pixmap::clear() {
 void Pixmap::exportToFile(std::string path) {
   std::ofstream file;
   file.open(path, std::ios::ios_base::binary | std::ios::ios_base::out);
-  std::cout << path << std::endl;
   file << "P5\n" << std::to_string(width) << " " << std::to_string(height) << "\n255\n";
   for (int index = 0; index < area(); index++) {
     file << getPixel(index);
