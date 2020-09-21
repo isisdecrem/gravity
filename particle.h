@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "vec3.h"
+// heallo 
 
 #ifndef PARTICLE_DEFINED_
 #define PARTICLE_DEFINED_
